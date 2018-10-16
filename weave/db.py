@@ -3,7 +3,6 @@ import operator
 import hashlib
 from collections import Counter
 import json
-from .password import *
 
 # CREATE TABLE revamp_data (
 #     user_id VARCHAR(255) NOT NULL PRIMARY KEY,

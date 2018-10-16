@@ -2,12 +2,15 @@ import os
 import logging
 import sys
 from flask import Flask
-application = Flask(__name__)
+from flask_cors import CORS
+application = Flask(__name__,static_folder='../static')
+CORS(application)
 from .db import *
 
 # db = DBConnection()
 
-import weave.routes.square
+import weave.routes.echo
+import weave.routes.video
 # import weave.routes.hardcode
 
 

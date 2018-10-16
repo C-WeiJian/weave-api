@@ -1,7 +1,7 @@
 import logging
 import os
 from weave import application
-# logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 @application.route('/', methods=['GET'])
 def default_route():
@@ -23,7 +23,7 @@ if __name__ == "__main__":
     #     consoleHandler.setFormatter(logFormatter)
     #     rootLogger.addHandler(consoleHandler)
 
-        # logger.info("Starting application ...")
+    #     logger.info("Starting application ...")
     application.run()
     # app.run(debug=True)
 
