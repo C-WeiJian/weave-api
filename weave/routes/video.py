@@ -44,3 +44,28 @@ def token():
 
     # Return token info as JSON
     return jsonify(identity=token.identity, token=token.to_jwt().decode('utf-8'))
+
+@app.route('/token/<device_type>')
+def token_phone(device_type):
+    # get credentials for environment variables
+    # account_sid = os.environ['TWILIO_ACCOUNT_SID']
+    # api_key = os.environ['TWILIO_API_KEY']
+    # api_secret = os.environ['TWILIO_API_SECRET']
+
+    account_sid = os.environ['account_sid']
+    api_key = os.environ['api_key']
+    api_secret = os.environ['api_secret']
+
+    # Create an Access Token
+    token = AccessToken(account_sid, api_key, api_secret)
+
+    # Set the Identity of this token
+    token.identity = device_type
+
+    # Grant access to Video
+    # grant = VideoGrant(room='cool room')
+    grant = VideoGrant()
+    token.add_grant(grant)
+
+    # Return token info as JSON
+    return jsonify(identity=token.identity, token=token.to_jwt().decode('utf-8'))
