@@ -19,9 +19,13 @@ def submitform():
     data = request.get_json()
     db.get(user_id)
     db.update(user_id, data)
-
     return jsonify(data)
 
+@app.route('/form', methods=['GET'])
+def getform():
+    user_id = 'form'
+    data = db.get(user_id)
+    return jsonify(data)
 
 @app.route('/alarm')
 def alarm():
