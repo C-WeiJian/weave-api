@@ -9,7 +9,6 @@ import sys
 
 from weave import application as app
 
-# fake = Factory.create()
 fake = Faker()
 
 

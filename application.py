@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 @application.route('/', methods=['GET'])
 def default_route():
     application.logger.info("base url requested. saying hello")
-    return "Team weave page. Hello"
+    return "Hi. My name is weave."
 
 
 if __name__ == "__main__":
