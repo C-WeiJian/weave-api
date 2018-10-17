@@ -7,7 +7,7 @@ application = Flask(__name__, static_folder='../static')
 CORS(application)
 from .db import *
 
-# db = DBConnection()
+db = DBConnection()
 
 import weave.routes.echo
 import weave.routes.video
