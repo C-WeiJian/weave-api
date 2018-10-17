@@ -11,11 +11,16 @@ from weave import db
 @app.route('/echo', methods=['POST'])
 def evaluate():
     data = request.get_json()
-    app.logger.info("data sent for evaluation {}".format(data))
-    inputValue = data.get("input")
-    result = inputValue * inputValue
-    app.logger.info("My result :{}".format(result))
-    return jsonify(result)
+    return jsonify(data)
+
+@app.route('/form', methods=['POST'])
+def submitform():
+    user_id = 'form'
+    data = request.get_json()
+    db.get(user_id)
+    db.update(user_id, data)
+
+    return jsonify(data)
 
 
 @app.route('/alarm')

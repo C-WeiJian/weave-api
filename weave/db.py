@@ -42,22 +42,7 @@ class DBConnection:
         self.conn.commit()
 
     def empty_json_data(self):
-        data = {
-            "lists": {
-                "current": {
-                    "items": [],
-                    "subtotal": 0,
-                    "discount": 0,
-                    "total": 0
-                }
-            },
-            "shopping": {
-                "items": [],
-                "subtotal": 0,
-                "discount": 0,
-                "total": 0
-            }
-        }
+        data = {}
         return data
 
     def get(self, user_id):
