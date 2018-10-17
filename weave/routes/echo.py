@@ -15,3 +15,6 @@ def evaluate():
     app.logger.info("My result :{}".format(result))
     return jsonify(result)
 
+@app.route('/alarm')
+def alarm():
+    return jsonify(switch = 1)
