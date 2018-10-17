@@ -18,6 +18,7 @@ def submitform():
     user_id = 'form'
     data = request.get_json()
     db.get(user_id)
+    print(data)
     db.update(user_id, data)
     return jsonify(data)
 
