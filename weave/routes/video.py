@@ -7,7 +7,6 @@ from twilio.jwt.access_token.grants import ConversationsGrant, VideoGrant
 from twilio.rest import Client
 
 
-
 import sys
 
 from weave import application as app
@@ -48,6 +47,7 @@ def token():
     # Return token info as JSON
     return jsonify(identity=token.identity, token=token.to_jwt().decode('utf-8'))
 
+
 @app.route('/token/<device_type>')
 def token_phone(device_type):
     # get credentials for environment variables
@@ -55,7 +55,7 @@ def token_phone(device_type):
     # api_key = os.environ['TWILIO_API_KEY']
     # api_secret = os.environ['TWILIO_API_SECRET']
 
-    create_room('hello')
+    # create_room('hello')
 
     account_sid = os.environ['account_sid']
     api_key = os.environ['api_key']
@@ -75,6 +75,7 @@ def token_phone(device_type):
     # Return token info as JSON
     return jsonify(identity=token.identity, token=token.to_jwt().decode('utf-8'))
 
+
 @app.route('/room/<room_name>/setup')
 def room_setup(room_name):
     # get credentials for environment variables
@@ -85,26 +86,26 @@ def room_setup(room_name):
     create_room(room_name)
 
     # Return token info as JSON
-    return jsonify(success = True)
+    return jsonify(success=True)
+
 
 def create_room(room_name):
     account_sid = os.environ['account_sid']
-    api_key = os.environ['api_key']
-    api_secret = os.environ['api_secret']
 
     # Your Account Sid and Auth Token from twilio.com/console
     auth_token = os.environ['auth_token']
     client = Client(account_sid, auth_token)
 
     room = client.video.rooms.create(
-                                record_participants_on_connect=True,
-                                status_callback='http://weave-sg.herokuapp.com/videocallback',
-                                status_callback_method= "POST",
-                                type='group',
-                                unique_name=room_name
-                            )
+        record_participants_on_connect=True,
+        status_callback='http://weave-sg.herokuapp.com/videocallback',
+        status_callback_method="POST",
+        type='group',
+        unique_name=room_name
+    )
 
     print(room.sid)
+
 
 @app.route('/videocallback', methods=['POST'])
 def room_callback():
@@ -113,7 +114,6 @@ def room_callback():
     # api_key = os.environ['TWILIO_API_KEY']
     # api_secret = os.environ['TWILIO_API_SECRET']
     data = request.get_data()
-
 
     # account_sid = os.environ['account_sid']
     # api_key = os.environ['api_key']
@@ -134,4 +134,4 @@ def room_callback():
     # print(room.sid)
 
     # Return token info as JSON
-    return jsonify(success = True)
+    return jsonify(success=True)
