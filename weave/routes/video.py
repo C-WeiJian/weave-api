@@ -5,7 +5,7 @@ from faker import Faker
 from twilio.jwt.access_token import AccessToken
 from twilio.jwt.access_token.grants import ConversationsGrant, VideoGrant
 from twilio.rest import Client
-
+from twilio.base.exceptions import TwilioRestException
 
 import sys
 
@@ -55,7 +55,7 @@ def token_phone(device_type):
     # api_key = os.environ['TWILIO_API_KEY']
     # api_secret = os.environ['TWILIO_API_SECRET']
 
-    # create_room('hello')
+    create_room('hello')
 
     account_sid = os.environ['account_sid']
     api_key = os.environ['api_key']
@@ -83,10 +83,10 @@ def room_setup(room_name):
     # api_key = os.environ['TWILIO_API_KEY']
     # api_secret = os.environ['TWILIO_API_SECRET']
 
-    create_room(room_name)
+    status = create_room(room_name)
 
     # Return token info as JSON
-    return jsonify(success=True)
+    return jsonify(success=status)
 
 
 def create_room(room_name):
@@ -96,15 +96,19 @@ def create_room(room_name):
     auth_token = os.environ['auth_token']
     client = Client(account_sid, auth_token)
 
-    room = client.video.rooms.create(
-        record_participants_on_connect=True,
-        status_callback='http://weave-sg.herokuapp.com/videocallback',
-        status_callback_method="POST",
-        type='group',
-        unique_name=room_name
-    )
+    try:
+        client.video.rooms('hello').fetch()
+    except TwilioRestException:
+        room = client.video.rooms.create(
+            record_participants_on_connect=True,
+            status_callback='http://weave-sg.herokuapp.com/videocallback',
+            status_callback_method="POST",
+            type='group',
+            unique_name=room_name
+        )
+        return True
 
-    print(room.sid)
+    return False
 
 
 @app.route('/videocallback', methods=['POST'])
