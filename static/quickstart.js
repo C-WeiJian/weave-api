@@ -39,25 +39,21 @@ window.addEventListener('beforeunload', leaveRoomIfJoined);
 $.getJSON('/token/phone', function(data) {
   identity = data.identity;
 
-  document.getElementById('room-controls').style.display = 'block';
+  // document.getElementById('room-controls').style.display = 'block';
 
   // Bind button to join room
   document.getElementById('button-join').onclick = function () {
-    roomName = document.getElementById('room-name').value;
-    if (roomName) {
-      log("Joining room '" + roomName + "'...");
+    var roomName = 'hello'
+    log("Joining room '" + roomName + "'...");
 
-      var connectOptions = { name: roomName, logLevel: 'debug' };
-      if (previewTracks) {
-        connectOptions.tracks = previewTracks;
-      }
-
-      Twilio.Video.connect(data.token, connectOptions).then(roomJoined, function(error) {
-        log('Could not connect to Twilio: ' + error.message);
-      });
-    } else {
-      alert('Please enter a room name.');
+    var connectOptions = { name: roomName, logLevel: 'debug' };
+    if (previewTracks) {
+      connectOptions.tracks = previewTracks;
     }
+
+    Twilio.Video.connect(data.token, connectOptions).then(roomJoined, function(error) {
+      log('Could not connect to Twilio: ' + error.message);
+    });
   };
 
   // Bind button to leave room
