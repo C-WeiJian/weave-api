@@ -55,6 +55,8 @@ def token_phone(device_type):
     # api_key = os.environ['TWILIO_API_KEY']
     # api_secret = os.environ['TWILIO_API_SECRET']
 
+    create_room('hello')
+
     account_sid = os.environ['account_sid']
     api_key = os.environ['api_key']
     api_secret = os.environ['api_secret']
@@ -80,6 +82,12 @@ def room_setup(room_name):
     # api_key = os.environ['TWILIO_API_KEY']
     # api_secret = os.environ['TWILIO_API_SECRET']
 
+    create_room(room_name)
+
+    # Return token info as JSON
+    return jsonify(success = True)
+
+def create_room(room_name):
     account_sid = os.environ['account_sid']
     api_key = os.environ['api_key']
     api_secret = os.environ['api_secret']
@@ -93,13 +101,10 @@ def room_setup(room_name):
                                 status_callback='http://weave-sg.herokuapp.com/videocallback',
                                 status_callback_method= "POST",
                                 type='group',
-                                unique_name='hello'
+                                unique_name=room_name
                             )
 
     print(room.sid)
-
-    # Return token info as JSON
-    return jsonify(success = True)
 
 @app.route('/videocallback', methods=['POST'])
 def room_callback():
